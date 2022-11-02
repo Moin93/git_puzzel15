@@ -10,7 +10,12 @@ public class tile15 extends JFrame implements ActionListener {
     JPanel gamePanel = new JPanel();
     JPanel newGamePanel = new JPanel();
     JButton newGameButton = new JButton("Start new game");
-    ArrayList<JButton> buttonList = new ArrayList<JButton>();
+
+    JButton wingame_b = new JButton("win the game!");
+    ArrayList<JButton> buttonList = new ArrayList<>();
+
+    ArrayList<JButton> button_winnerlist = new ArrayList<>();
+
 
     public JButton placeholder(JButton emptybutton) {
         return emptybutton;
@@ -20,19 +25,23 @@ public class tile15 extends JFrame implements ActionListener {
         add(gamePanel,BorderLayout.CENTER);
         add(newGamePanel,BorderLayout.NORTH);
         newGamePanel.add(newGameButton);
+        newGamePanel.add(wingame_b);
         gamePanel.setLayout(new GridLayout(4,4));
         for(int i = 0;i<15;i++){
             buttonList.add(new JButton(String.valueOf(i+1)));
         }
         buttonList.add(new JButton());
+        button_winnerlist.addAll(buttonList);
         Collections.shuffle(buttonList);
 
         newGameButton.addActionListener(this);
+        wingame_b.addActionListener(this);
 
         for(JButton button:buttonList){
             button.addActionListener(this);
             gamePanel.add(button);
         }
+
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -177,9 +186,19 @@ public class tile15 extends JFrame implements ActionListener {
             }
 
         }
+        if (buttonList.equals(button_winnerlist)){
+            JOptionPane.showMessageDialog(null,
+                    "congrats you've won this round!");
+        }
+        if (e.getSource()==wingame_b){
+            for (JButton b:button_winnerlist) {
+                gamePanel.add(b);
+            }
+            gamePanel.revalidate();
+            JOptionPane.showMessageDialog(null,
+                    "congrats you've won this round!");
+        }
     }
 
 
 }
-
-
